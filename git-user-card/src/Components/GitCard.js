@@ -39,49 +39,100 @@ function GitCard(props) {
 
   console.log(props);
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
+    <div className="git-cards">
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              R
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={props.gitCard.name}
+          subheader={props.gitCard.login}
+        />
+        <CardMedia
+          className={classes.media}
+          image={props.gitCard.avatar_url}
+          title="Github avatar"
+        />
+        <CardContent>
+          <Typography paragraph>
+            Profile:
+            <a href={props.gitCard.html_url}> {props.gitCard.html_url} </a>
+          </Typography>
+          <Typography paragraph>Location: {props.gitCard.location}</Typography>
+          <h5>Followers: </h5>
+          {props.followers.map((follower) => (
+            <Typography paragraph> {follower.login}</Typography>
+          ))}
+          <h5>Following: </h5>
+          <Typography paragraph>{props.gitCard.following} </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Bio: {props.gitCard.bio}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
           </IconButton>
-        }
-        title={props.gitCard.name}
-        subheader={props.gitCard.login}
-      />
-      <CardMedia
-        className={classes.media}
-        image={props.gitCard.avatar_url}
-        title="Github avatar"
-      />
-      <CardContent>
-        <Typography paragraph>Profile: {props.gitCard.html_url} </Typography>
-        <Typography paragraph>Location: {props.gitCard.location}</Typography>
-        <h5>Followers: </h5>
-        {props.followers.map((follower) => (
-          <Typography paragraph> {follower.login}</Typography>
-        ))}
-        <h5>Following: </h5>
-        <Typography paragraph>{props.gitCard.following} </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Bio: {props.gitCard.bio}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+        </CardActions>
+      </Card>
+
+      {props.followers.map((follower) => (
+        <Card className={classes.root}>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="recipe" className={classes.avatar}>
+                R
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            title={follower.name}
+            subheader={follower.login}
+          />
+          <CardMedia
+            className={classes.media}
+            image={follower.avatar_url}
+            title="Github avatar"
+          />
+          <CardContent>
+            <Typography paragraph>
+              {" "}
+              Profile:
+              <a href={follower.html_url}> {follower.html_url} </a>
+            </Typography>
+            <Typography paragraph>Location: {follower.location}</Typography>
+            <h5>Followers: </h5>
+            <Typography paragraph> {follower.followers_url.length}</Typography>
+            <h5>Following: </h5>
+            <Typography paragraph>{follower.following_url.length} </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Bio: {follower.bio}
+            </Typography>
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+            <IconButton aria-label="share">
+              <ShareIcon />
+            </IconButton>
+          </CardActions>
+        </Card>
+      ))}
+    </div>
   );
 }
-
 export default GitCard;
